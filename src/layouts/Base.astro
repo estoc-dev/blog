@@ -1,0 +1,40 @@
+---
+import { href } from "../paths.ts";
+import "../styles/site.css";
+
+interface Props {
+  title?: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const site = "Estoc 中文";
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{title === undefined ? site : `${title} · ${site}`}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title ?? site} />
+    <meta property="og:description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="alternate" type="application/rss+xml" title={site} href={href("rss.xml")} />
+    <link rel="icon" type="image/svg+xml" href={href("favicon.svg")} />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <a class="wordmark" href={href()}>{site}</a>
+        <a class="elsewhere" href="https://estoc.net">estoc.net</a>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer>Estoc Research</footer>
+    </div>
+  </body>
+</html>

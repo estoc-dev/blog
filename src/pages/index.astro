@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { href } from "../paths.ts";
+import { byNewest, dateText } from "../posts.ts";
+
+const posts = (await getCollection("posts")).sort(byNewest);
+---
+
+<Base description="Estoc 的設計筆記：離線優先的身份、資料與通訊。">
+  <ol class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <time datetime={post.data.date.toISOString().slice(0, 10)}>{dateText(post.data.date)}</time>
+          <a href={href(`posts/${post.id}/`)}>{post.data.title}</a>
+          <p>{post.data.description}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Base>
