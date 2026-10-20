@@ -51,8 +51,8 @@ Signature  {"identity": <Identity>, "object": "sha256:<物件的連結>", "signa
 硬體錢包不適合每次登入都拿出來按一下。所以一個身份可以授權另一個身份代它行事，例如讓瀏覽器裏的一把鑰匙代錢包登入。
 
 ```
-Authorization  {"agent": <Identity>, "until"?: <時間>}            由授權者簽
-Proxy          {"target": <物件的連結>, "chain": [<授權簽名的連結>, …]}  由最後一個代理人簽
+Authorization  {"agent": <Identity>, "until"?: <時間>}
+Proxy          {"target": <物件的連結>, "chain": [<授權簽名的連結>, …]}
 ```
 
 - 誰簽了 Authorization，誰就是授權者，物件本身不寫。授權是全權的，包括再授權別人。
