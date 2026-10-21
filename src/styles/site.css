@@ -1,22 +1,23 @@
+/* Colour values follow the app's copper-and-verdigris design language. */
 :root {
-  --bg: #F1F4F5;
-  --ink: #182028;
-  --muted: #55636F;
-  --accent: #2F7A6B;
-  --line: #C9D2D7;
-  --faint: #E2E8EB;
+  --bg: #edf2f4;
+  --surface: #f7f9fa;
+  --ink: #233238;
+  --muted: #495e65;
+  --accent: #2d6a58;
+  --line: #d3dfe3;
   --sans: "PingFang TC", "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", system-ui, sans-serif;
   --serif: "Noto Serif TC", "Noto Serif CJK TC", "Source Han Serif TC", "Songti TC", "PMingLiU", serif;
   --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0F1519;
-    --ink: #DCE4E9;
-    --muted: #8FA0AC;
-    --accent: #57B39E;
-    --line: #2A353D;
-    --faint: #1A232A;
+    --bg: #172024;
+    --surface: #202b30;
+    --ink: #e9eeee;
+    --muted: #aebcc2;
+    --accent: #9acbbb;
+    --line: #36464d;
   }
 }
 html:lang(en) {
@@ -43,34 +44,54 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 1rem;
   padding: 1.5rem 0 1rem;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 3.5rem;
+  margin-bottom: 3rem;
 }
 .wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--serif);
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   color: var(--ink);
   text-decoration: none;
 }
+.wordmark img { width: 1.25rem; height: 1.25rem; }
 .langs { display: flex; gap: 1rem; font-size: 0.875rem; }
 .langs a { color: var(--muted); text-decoration: none; }
 .langs a:hover { color: var(--accent); }
 footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
   margin-top: 5rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.875rem;
 }
-time { display: block; color: var(--muted); font-size: 0.875rem; }
+footer a { color: var(--muted); }
+footer a:hover { color: var(--accent); }
 
-.posts { list-style: none; display: grid; gap: 2.5rem; }
-.posts a { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; text-decoration: none; color: var(--ink); }
+.intro { color: var(--muted); margin-bottom: 2.5rem; }
+.posts { list-style: none; }
+.posts li {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  column-gap: 1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+}
+.posts time { font: 0.8125rem/2.1 var(--mono); color: var(--muted); }
+.posts a { font-family: var(--serif); font-size: 1.1875rem; font-weight: 600; line-height: 1.5; text-decoration: none; color: var(--ink); }
 .posts a:hover { color: var(--accent); }
-.posts p { color: var(--muted); margin-top: 0.25rem; }
+.posts p { color: var(--muted); font-size: 0.9375rem; margin-top: 0.25rem; }
+@media (max-width: 30rem) {
+  .posts li { grid-template-columns: 1fr; }
+}
 
 .choice { list-style: none; display: flex; gap: 2rem; }
 .choice a { font-family: var(--serif); font-size: 1.25rem; text-decoration: none; color: var(--ink); }
@@ -82,7 +103,9 @@ article h1 {
   font-weight: 600;
   line-height: 1.4;
 }
-article > time { margin: 0.5rem 0 2.5rem; }
+.meta { color: var(--muted); font-size: 0.875rem; margin: 0.5rem 0 2.5rem; }
+.meta a { color: var(--muted); }
+.meta a:hover { color: var(--accent); }
 article h2 {
   font-family: var(--serif);
   font-size: 1.25rem;
@@ -94,19 +117,39 @@ article ul, article ol { padding-left: 1.5rem; }
 article li + li { margin-top: 0.375rem; }
 article code { font-family: var(--mono); font-size: 0.875em; }
 article :not(pre) > code {
-  background: var(--faint);
+  background: var(--surface);
   border-radius: 3px;
   padding: 0.1em 0.3em;
   overflow-wrap: anywhere;
 }
 article pre {
   padding: 1rem;
-  border-radius: 4px;
+  border-radius: 6px;
   overflow-x: auto;
   line-height: 1.6;
-  background-color: var(--faint) !important;
+  background-color: var(--surface) !important;
 }
 article pre code { font-size: 0.8125rem; }
 @media (prefers-color-scheme: dark) {
   .astro-code span { color: var(--shiki-dark) !important; }
+}
+/* A fence without a language holds the shape of a type or a folder, set apart from interface code. */
+article pre[data-language="plaintext"] {
+  padding: 0.25rem 0 0.25rem 1rem;
+  border-left: 2px solid var(--accent);
+  border-radius: 0;
+  background-color: transparent !important;
+  color: var(--ink) !important;
+  --shiki-dark: var(--ink) !important;
+}
+.astro-code .type-name { color: var(--accent) !important; font-weight: 600; }
+article > p:last-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.875em;
+  height: 0.875em;
+  margin-left: 0.5em;
+  vertical-align: -0.1em;
+  background: var(--accent);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='6 6 20 20'%3E%3Crect x='7' y='7' width='18' height='18' fill='none' stroke='%23000' stroke-width='2'/%3E%3Crect x='12' y='12' width='8' height='8'/%3E%3C/svg%3E") center / contain no-repeat;
 }

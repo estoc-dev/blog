@@ -22,6 +22,8 @@ export const postsIn = async (lang: Lang) =>
     .filter((post) => post.lang === lang)
     .sort((a, b) => b.entry.data.date.valueOf() - a.entry.data.date.valueOf());
 
+export const isoDate = (date: Date) => date.toISOString().slice(0, 10);
+
 export const postPath = (post: Post) => `/${post.lang}/posts/${post.slug}/`;
 
 export const translationsOf = (post: Post, posts: readonly Post[]): Translations =>

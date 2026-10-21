@@ -1,7 +1,7 @@
 ---
 import Base from "../../layouts/Base.astro";
 import { home, langs, locales, type Lang } from "../../i18n.ts";
-import { postPath, postsIn } from "../../posts.ts";
+import { isoDate, postPath, postsIn } from "../../posts.ts";
 
 export const getStaticPaths = () => langs.map((lang) => ({ params: { lang }, props: { lang } }));
 
@@ -11,13 +11,16 @@ const translations = Object.fromEntries(langs.map((other) => [other, home(other)
 ---
 
 <Base lang={lang} description={locales[lang].description} translations={translations}>
+  <p class="intro">{locales[lang].description}</p>
   <ol class="posts">
     {
       posts.map((post) => (
         <li>
-          <time datetime={post.entry.data.date.toISOString().slice(0, 10)}>{locales[lang].date(post.entry.data.date)}</time>
-          <a href={postPath(post)}>{post.entry.data.title}</a>
-          <p>{post.entry.data.description}</p>
+          <time datetime={isoDate(post.entry.data.date)}>{isoDate(post.entry.data.date)}</time>
+          <div>
+            <a href={postPath(post)}>{post.entry.data.title}</a>
+            <p>{post.entry.data.description}</p>
+          </div>
         </li>
       ))
     }

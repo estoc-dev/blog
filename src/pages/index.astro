@@ -21,11 +21,12 @@ const fallback: Lang = "en";
     {langs.map((lang) => <link rel="alternate" hreflang={locales[lang].tag} href={new URL(home(lang), Astro.site)} />)}
     <link rel="alternate" hreflang="x-default" href={new URL("/", Astro.site)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body>
     <div class="wrap">
       <header>
-        <span class="wordmark">Estoc</span>
+        <span class="wordmark"><img src="/favicon.svg" alt="" />Estoc</span>
       </header>
       <main>
         <ul class="choice">

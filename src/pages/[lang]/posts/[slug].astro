@@ -1,8 +1,8 @@
 ---
 import { render } from "astro:content";
 import Base from "../../../layouts/Base.astro";
-import { locales, type Translations } from "../../../i18n.ts";
-import { allPosts, translationsOf, type Post } from "../../../posts.ts";
+import { langs, locales, type Translations } from "../../../i18n.ts";
+import { allPosts, isoDate, translationsOf, type Post } from "../../../posts.ts";
 
 export async function getStaticPaths() {
   const posts = await allPosts();
@@ -15,12 +15,19 @@ export async function getStaticPaths() {
 const { post, translations } = Astro.props as { post: Post; translations: Translations };
 const { title, description, date } = post.entry.data;
 const { Content } = await render(post.entry);
+const others = langs.flatMap((other) => {
+  const path = translations[other];
+  return other === post.lang || path === undefined ? [] : [{ ...locales[other], path }];
+});
 ---
 
 <Base lang={post.lang} title={title} description={description} translations={translations}>
   <article>
     <h1>{title}</h1>
-    <time datetime={date.toISOString().slice(0, 10)}>{locales[post.lang].date(date)}</time>
+    <p class="meta">
+      <time datetime={isoDate(date)}>{locales[post.lang].date(date)}</time>
+      {others.map(({ tag, name, path }) => <> · <a href={path} hreflang={tag} lang={tag}>{name}</a></>)}
+    </p>
     <Content />
   </article>
 </Base>

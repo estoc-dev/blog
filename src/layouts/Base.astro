@@ -34,11 +34,12 @@ const switches = langs
     {alternates.map(({ tag, url }) => <link rel="alternate" hreflang={tag} href={url} />)}
     <link rel="alternate" type="application/rss+xml" title={site} href={`${home(lang)}rss.xml`} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body>
     <div class="wrap">
       <header>
-        <a class="wordmark" href={home(lang)}>{site}</a>
+        <a class="wordmark" href={home(lang)}><img src="/favicon.svg" alt="" />{site}</a>
         <nav class="langs">
           {switches.map(({ tag, name, path }) => <a href={path} hreflang={tag} lang={tag}>{name}</a>)}
         </nav>
@@ -46,7 +47,11 @@ const switches = langs
       <main>
         <slot />
       </main>
-      <footer>Estoc Research</footer>
+      <footer>
+        <span>Everyone's Sovereign Toolkit</span>
+        <a href={`${home(lang)}rss.xml`}>RSS</a>
+        <a href="https://github.com/estoc-dev">GitHub</a>
+      </footer>
     </div>
   </body>
 </html>
