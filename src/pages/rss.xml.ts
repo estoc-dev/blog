@@ -7,7 +7,7 @@ import { byNewest } from "../posts.ts";
 export async function GET(context: APIContext) {
   const posts = (await getCollection("posts")).sort(byNewest);
   return rss({
-    title: "Estoc 中文",
+    title: "Estoc",
     description: "Estoc 的設計筆記：離線優先的身份、資料與通訊。",
     site: new URL(href(), context.site),
     customData: "<language>zh-Hant</language>",
