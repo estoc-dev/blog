@@ -23,7 +23,7 @@ interface Signer {
 function verify(identity: Identity, digest: Uint8Array, signature: Uint8Array): boolean
 ```
 
-- `sign` lives with the holder and signs the hash of an object. It is asynchronous because the signer might be a key in memory, or a wallet that waits for someone to press a button.
+- `sign` lives with the holder and signs the hash of an object.
 - `verify` is for anyone: with the identity, the hash and the signature, you can verify without going online or asking any server.
 
 Anything that can do these two things can be an identity. The first version supports three kinds: a plain Ed25519 key, an Ethereum wallet's `personal_sign`, and Solana's off-chain message. Each wraps the content to be signed in its own format, but all of them can sign a piece of text, and all of them can be verified locally from the public key alone.

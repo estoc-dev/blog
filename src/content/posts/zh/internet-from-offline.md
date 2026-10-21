@@ -23,7 +23,7 @@ interface Signer {
 function verify(identity: Identity, digest: Uint8Array, signature: Uint8Array): boolean
 ```
 
-- `sign` 在持有者那邊，替一份物件的 hash 簽名。它是非同步的，因為簽名的可能是記憶體裏的一把鑰匙，也可能是一個要人按一下才簽的錢包。
+- `sign` 在持有者那邊，替一份物件的 hash 簽名。
 - `verify` 在任何人那邊：有身份、hash 和簽名就能驗，不連網，也不問任何伺服器。
 
 實現得了這兩件事的，都可以是身份。第一版支援三種：普通的 Ed25519 鑰匙、以太坊錢包的 `personal_sign`，以及 Solana 的 off-chain message。三者把要簽的內容包成不同的格式，但都能替一段文字簽名，也都能只憑公鑰在本地驗。
