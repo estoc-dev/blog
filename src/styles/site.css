@@ -35,8 +35,7 @@ body {
   font-size: 1.0625rem;
   line-height: 1.85;
 }
-/* Only English wraps pretty: Safari evens the rag by shortening every line, which in Chinese, where any character may end a line, leaves a wide empty margin instead. */
-html:lang(en) body { font-size: 1.125rem; line-height: 1.65; text-wrap: pretty; }
+html:lang(en) body { font-size: 1.125rem; line-height: 1.65; }
 /* A phone's line of some twenty characters is too short to absorb the slack an English word or inline code leaves, so justified spacing would visibly vary there. */
 @media (min-width: 40rem) {
   :is(p, article li):lang(zh) { text-align: justify; }
