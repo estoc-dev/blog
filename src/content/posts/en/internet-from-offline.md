@@ -42,7 +42,7 @@ We organize data as JSON objects. But data alone is not enough: whoever receives
 Object  {"data": <any JSON value>, "schema": "sha256:<link to the schema>"}
 ```
 
-The schema is content-addressed: its link is the SHA-256 of its content, so changing a single character gives a different link. That lets the schema serve as the object's type, and the type cannot change behind its users' backs. Users handle only the types they recognize: when an app meets a schema it does not know, it can tell the object is not meant for it, and it will not mistake the object for one of its own.
+The schema is content-addressed: its link is the SHA-256 of its content, so changing a single character gives a different link. That lets the schema serve as the object's type, and the type cannot change behind its users' backs. Users handle only the types they recognize.
 
 An object also gets a link from its content. When an identity signs an object, this link is what it signs:
 
