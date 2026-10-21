@@ -1,5 +1,5 @@
 {
-  "name": "blog-zh",
+  "name": "blog",
   "type": "module",
   "engines": {
     "node": ">=22.22.0"

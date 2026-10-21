@@ -19,6 +19,10 @@
     --faint: #1A232A;
   }
 }
+html:lang(en) {
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 body {
@@ -28,6 +32,7 @@ body {
   font-size: 1.0625rem;
   line-height: 1.85;
 }
+html:lang(en) body { line-height: 1.7; }
 a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 0.25em; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .wrap {
@@ -50,6 +55,9 @@ header {
   color: var(--ink);
   text-decoration: none;
 }
+.langs { display: flex; gap: 1rem; font-size: 0.875rem; }
+.langs a { color: var(--muted); text-decoration: none; }
+.langs a:hover { color: var(--accent); }
 footer {
   margin-top: 5rem;
   padding-top: 1rem;
@@ -63,6 +71,10 @@ time { display: block; color: var(--muted); font-size: 0.875rem; }
 .posts a { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; text-decoration: none; color: var(--ink); }
 .posts a:hover { color: var(--accent); }
 .posts p { color: var(--muted); margin-top: 0.25rem; }
+
+.choice { list-style: none; display: flex; gap: 2rem; }
+.choice a { font-family: var(--serif); font-size: 1.25rem; text-decoration: none; color: var(--ink); }
+.choice a:hover { color: var(--accent); }
 
 article h1 {
   font-family: var(--serif);

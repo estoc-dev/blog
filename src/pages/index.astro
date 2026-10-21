@@ -1,22 +1,37 @@
 ---
-import { getCollection } from "astro:content";
-import Base from "../layouts/Base.astro";
-import { href } from "../paths.ts";
-import { byNewest, dateText } from "../posts.ts";
+import { home, langs, locales, type Lang } from "../i18n.ts";
+import "../styles/site.css";
 
-const posts = (await getCollection("posts")).sort(byNewest);
+const fallback: Lang = "en";
 ---
 
-<Base description="Estoc 的設計筆記：離線優先的身份、資料與通訊。">
-  <ol class="posts">
-    {
-      posts.map((post) => (
-        <li>
-          <time datetime={post.data.date.toISOString().slice(0, 10)}>{dateText(post.data.date)}</time>
-          <a href={href(`posts/${post.id}/`)}>{post.data.title}</a>
-          <p>{post.data.description}</p>
-        </li>
-      ))
-    }
-  </ol>
-</Base>
+<!doctype html>
+<html lang="mul">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Estoc</title>
+    <script is:inline define:vars={{ langs, fallback }}>
+      const preferred = navigator.languages
+        .map((tag) => tag.split("-")[0].toLowerCase())
+        .find((code) => langs.includes(code));
+      location.replace(`/${preferred ?? fallback}/`);
+    </script>
+    {langs.map((lang) => <link rel="alternate" hreflang={locales[lang].tag} href={new URL(home(lang), Astro.site)} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL("/", Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <span class="wordmark">Estoc</span>
+      </header>
+      <main>
+        <ul class="choice">
+          {langs.map((lang) => <li><a href={home(lang)} hreflang={locales[lang].tag} lang={locales[lang].tag}>{locales[lang].name}</a></li>)}
+        </ul>
+      </main>
+    </div>
+  </body>
+</html>

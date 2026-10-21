@@ -1,18 +1,27 @@
 ---
-import { href } from "../paths.ts";
+import { home, langs, locales, type Lang, type Translations } from "../i18n.ts";
 import "../styles/site.css";
 
 interface Props {
+  lang: Lang;
   title?: string;
   description: string;
+  translations: Translations;
 }
 
-const { title, description } = Astro.props;
+const { lang, title, description, translations } = Astro.props;
 const site = "Estoc";
+const alternates = langs.flatMap((other) => {
+  const path = translations[other];
+  return path === undefined ? [] : [{ tag: locales[other].tag, url: new URL(path, Astro.site) }];
+});
+const switches = langs
+  .filter((other) => other !== lang)
+  .map((other) => ({ ...locales[other], path: translations[other] ?? home(other) }));
 ---
 
 <!doctype html>
-<html lang="zh-Hant">
+<html lang={locales[lang].tag}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,13 +31,17 @@ const site = "Estoc";
     <meta property="og:title" content={title ?? site} />
     <meta property="og:description" content={description} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
-    <link rel="alternate" type="application/rss+xml" title={site} href={href("rss.xml")} />
-    <link rel="icon" type="image/svg+xml" href={href("favicon.svg")} />
+    {alternates.map(({ tag, url }) => <link rel="alternate" hreflang={tag} href={url} />)}
+    <link rel="alternate" type="application/rss+xml" title={site} href={`${home(lang)}rss.xml`} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <div class="wrap">
       <header>
-        <a class="wordmark" href={href()}>{site}</a>
+        <a class="wordmark" href={home(lang)}>{site}</a>
+        <nav class="langs">
+          {switches.map(({ tag, name, path }) => <a href={path} hreflang={tag} lang={tag}>{name}</a>)}
+        </nav>
       </header>
       <main>
         <slot />

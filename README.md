@@ -1,14 +1,18 @@
-# blog-zh
+# blog
 
-Estoc 的中文博客，用 [Astro](https://astro.build) 建成靜態頁，推到 `main` 後由 GitHub Actions 部署到
-<https://estoc-dev.github.io/blog-zh/>。
+The Estoc blog in Chinese and English, built with [Astro](https://astro.build). Every push to `main` is
+deployed to <https://blog.estoc.dev> by GitHub Actions.
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-文章放在 `src/content/posts/<slug>.md`，網址是 `/posts/<slug>/`。開頭的 front matter 寫 `title`、
-`description` 與 `date`（`YYYY-MM-DD`），首頁與 RSS 按日期由新到舊排。
+Posts live in `src/content/posts/<lang>/<slug>.md`, where `<lang>` is `zh` or `en`, and are served at
+`/<lang>/posts/<slug>/`. A translation uses the same slug in the other language's folder, which is how
+the language switch finds it. The front matter holds `title`, `description` and `date` (`YYYY-MM-DD`).
+Each language has its own index and RSS feed, newest first; `/` sends readers to the language their
+browser prefers.
 
-文字用繁體中文；技術名詞保留英文。不用「永遠」「絕不」這類絕對的說法，也不用破折號。
+Chinese posts are in Traditional Chinese and keep technical terms in English. In both languages, avoid
+absolutes such as "never" or 「永遠」「絕不」, and avoid dashes (em dashes, 破折號).

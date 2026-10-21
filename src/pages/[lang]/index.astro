@@ -1,0 +1,25 @@
+---
+import Base from "../../layouts/Base.astro";
+import { home, langs, locales, type Lang } from "../../i18n.ts";
+import { postPath, postsIn } from "../../posts.ts";
+
+export const getStaticPaths = () => langs.map((lang) => ({ params: { lang }, props: { lang } }));
+
+const { lang } = Astro.props as { lang: Lang };
+const posts = await postsIn(lang);
+const translations = Object.fromEntries(langs.map((other) => [other, home(other)]));
+---
+
+<Base lang={lang} description={locales[lang].description} translations={translations}>
+  <ol class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <time datetime={post.entry.data.date.toISOString().slice(0, 10)}>{locales[lang].date(post.entry.data.date)}</time>
+          <a href={postPath(post)}>{post.entry.data.title}</a>
+          <p>{post.entry.data.description}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Base>
