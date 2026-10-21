@@ -26,6 +26,8 @@ function verify(identity: Identity, digest: Uint8Array, signature: Uint8Array): 
 
 實現得了這兩件事的，都可以是身份。第一版支援三種：普通的 Ed25519 鑰匙、以太坊錢包的 `personal_sign`，以及 Solana 的 off-chain message。三者把要簽的內容包成不同的格式，但都能替一段文字簽名，也都能只憑公鑰在本地驗。
 
+身份的物件形狀：
+
 ```
 Identity  {"publicKey": "<hex>", "scheme": "ed25519" | "eip191" | "solana-offchain"}
 ```
@@ -50,14 +52,17 @@ Signature  {"identity": <Identity>, "object": "sha256:<物件的連結>", "signa
 
 私鑰如果丟了，身份就徹底失去了。所以我們設想 root 身份應該被硬件保護起來，例如放在硬件錢包裏。然而硬件錢包如果整天拿出來用，洩露的風險就會增加，也很麻煩。所以日用的鑰匙應該是另一把：它得到 root 的授權，root 不在也能代為行事。
 
-```
-Authorization  {"agent": <Identity>, "until"?: <時間>}
-Proxy          {"target": <物件的連結>, "chain": [<授權簽名的連結>, …]}
-```
-
 要授權的時候，root 簽一份 Authorization，寫明代理人（agent）是誰，也可以寫一個到期時間。
 
+```
+Authorization  {"agent": <Identity>, "until"?: <時間>}
+```
+
 代理人要簽名的時候，不直接簽目標物件，而是簽一份 Proxy：`target` 指向要簽的物件，`chain` 引用 root 簽過的那份 Authorization。讀的人順着連結，就能讀出 root 站在這份物件後面，經手的是哪把日用的鑰匙。
+
+```
+Proxy  {"target": <物件的連結>, "chain": [<授權簽名的連結>, …]}
+```
 
 ## 信箱：網絡是加上去的一層
 
