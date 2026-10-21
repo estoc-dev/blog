@@ -95,4 +95,6 @@ blobs/sha256/<hex>  它依賴的 blob，檔名就是內容的 SHA-256
 
 可以想像將來人和人建立關係的時候，會傳遞一個物件，就像傳遞一個名片。這個名片物件裏包含了關係需要的其他能力物件，例如一個 Identity 和 Mailbox。這些物件可以用類似 AirDrop 的方式離線傳輸。
 
+目前的程式碼在 [estoc-dev/suite](https://github.com/estoc-dev/suite)。
+
 *To be continued*
